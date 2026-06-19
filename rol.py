@@ -1,9 +1,11 @@
 class Rol:
-    def __init__(self, nombre: str):
+    def __init__(self, id: int, nombre: str, descripcion: str):
+        self.id = id
         self.nombre = nombre
+        self.descripcion = descripcion
 
-    def crear_rol(self):
-        pass
 
-    def editar_rol(self):
-        pass
+# Roles: 
+#   * ADMIN 
+#   * VENDEDOR 
+#   * REPARTIDOR

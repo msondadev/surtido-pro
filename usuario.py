@@ -1,24 +1,38 @@
+from xmlrpc.client import DateTime
+from pedido import Pedido
 from rol import Rol
 
 class Usuario:
-    def __init__(self, id: int, nombre: str, email: str, password: str, roles: list[Rol]):
+    def __init__(
+        self, 
+        id: int, 
+        username: str, 
+        contrasenia: str, 
+        activo: bool, 
+        email_verificado: bool, 
+        creado_en: DateTime, 
+    ):
         self.id = id
-        self.nombre = nombre
-        self.email = email
-        self.password = password
-        self.roles = []  # List<Rol>
+        self.username = username
+        self.contrasenia = contrasenia
+        self.activo = activo
+        self.email_verificado = email_verificado
+        self.creado_en = creado_en 
+        
+        # Las listas arrancan vacías xq el usuario se crea s/roles ni pedidos asignados.
+        self.roles = []  # Una forma de escribirlo
+        self.pedidos: list[Pedido] = []  # Otra forma de escribirlo
+
 
     def login(self):
         pass
 
-    def cambiar_contrasenia(self, nueva: str):
+    def cerrarSesion(self):
         pass
 
-    def crear_pedido(self):
+    def recuperarContrasenia(self):
         pass
 
-    def ver_pedidos(self):
-        pass
+    def cambiarContrasenia(self, nueva: str):
+        pass    
 
-    def gestionar_productos(self):
-        pass
