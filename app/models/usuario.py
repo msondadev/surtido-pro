@@ -1,6 +1,6 @@
 from xmlrpc.client import DateTime
-from pedido import Pedido
-from rol import Rol
+from app.models.pedido import Pedido
+from app.models.rol import Rol
 
 class Usuario:
     def __init__(

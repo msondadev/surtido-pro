@@ -1,0 +1,19 @@
+# Entornos virtuales
+env/
+.venv/
+venv/
+
+# Archivos compilados de Python (evita que se llenen las carpetas de basura)
+**/__pycache__/
+*.py[cod]
+
+# Variables de entorno / Credenciales secretas
+.env
+
+# VSCode 
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

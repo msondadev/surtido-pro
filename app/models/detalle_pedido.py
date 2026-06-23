@@ -1,4 +1,4 @@
-from producto import Producto
+from app.models.producto import Producto
 
 class DetallePedido:
     def __init__(self, id: int, cantidad: int, precio_unitario: float, tipo_precio: str, producto: Producto):

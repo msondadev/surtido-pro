@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import date
-from enums import EstadoPago
+from app.models.enums import EstadoPago
 
 
 class Pago(ABC):

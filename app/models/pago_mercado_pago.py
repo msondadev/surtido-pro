@@ -1,6 +1,6 @@
 from datetime import date
-from enums import EstadoPago
-from pago import Pago
+from app.models.enums import EstadoPago
+from app.models.pago import Pago
 
 # Integración con la API de MP.
 class PagoMercadoPago(Pago):

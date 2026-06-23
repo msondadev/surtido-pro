@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from relacion_comercial import RelacionComercial
+from app.models.relacion_comercial import RelacionComercial
 
 class Participante(ABC):
     def __init__(self, id: int, email: str, telefono: str, direccion: str):

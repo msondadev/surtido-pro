@@ -1,6 +1,6 @@
 from datetime import date
-from enums import EstadoPago
-from pago import Pago
+from app.models.enums import EstadoPago
+from app.models.pago import Pago
 
 class PagoTransferencia(Pago):
     def __init__(self, id: int, fecha: date, monto: float, estado: EstadoPago, cbu: str, alias: str, comprobante_url: str):

@@ -1,5 +1,5 @@
-from categoria import Categoria
-from participante import Participante
+from app.models.categoria import Categoria
+from app.models.participante import Participante
 class Producto:
     # categoria va por parámetro porque un producto no puede existir sin una categoría. 
     def __init__(self, id: int, nombre: str, precio_minorista: float, precio_mayorista: float, stock_actual: int, stock_reservado: int, 

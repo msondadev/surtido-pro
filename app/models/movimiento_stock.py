@@ -1,7 +1,7 @@
 from datetime import date
-from enums import TipoMovimientoStock
-from producto import Producto
-from usuario import Usuario
+from app.models.enums import TipoMovimientoStock
+from app.models.producto import Producto
+from app.models.usuario import Usuario
 
 
 class MovimientoStock:

@@ -1,10 +1,10 @@
 from datetime import date
-from detalle_pedido import DetallePedido
-from empleado import Empleado
-from enums import EstadoPedido
-from participante import Participante
-from producto import Producto
-from usuario import Usuario
+from app.models.detalle_pedido import DetallePedido
+from app.models.empleado import Empleado
+from app.models.enums import EstadoPedido
+from app.models.participante import Participante
+from app.models.producto import Producto
+from app.models.usuario import Usuario
 
 class Pedido:
     def __init__(self, id: int, fecha: str, estado: EstadoPedido, total: float, cliente: Participante, usuario: Usuario, repartidor: Empleado = None):

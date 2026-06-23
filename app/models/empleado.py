@@ -1,5 +1,5 @@
 from datetime import date
-from persona_fisica import PersonaFisica
+from app.models.persona_fisica import PersonaFisica
 
 class Empleado(PersonaFisica):
     # Es una persona física pero trabaja en la empresa. 

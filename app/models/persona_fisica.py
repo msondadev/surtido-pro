@@ -1,6 +1,6 @@
 from datetime import date
-from participante import Participante
-from relacion_comercial import RelacionComercial
+from app.models.participante import Participante
+from app.models.relacion_comercial import RelacionComercial
 
 class PersonaFisica(Participante):
     def __init__(self, id: int, email: str, telefono: str, direccion: str, nombre: str, apellido: str, dni: str, fecha_nac: date):

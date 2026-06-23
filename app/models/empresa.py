@@ -1,4 +1,4 @@
-from participante import Participante
+from app.models.participante import Participante
 
 class Empresa(Participante):
     def __init__(self, id: int, email: str, telefono: str, direccion:str, razon_social: str, cuit: str):
