@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from sqlalchemy import text
+from app.core.database import engine
 
 app = FastAPI(
     title="Surtido Pro",
@@ -17,3 +19,14 @@ def root():
 def health_check():
     """Endpoint de salud. Usado para verificar el estado del servidor."""
     return {"status": "ok"}
+
+
+@app.get("/db-test")
+def db_test():
+    """
+    Prueba la conexión a MySQL ejecutando SELECT 1.
+    Si responde 'connected', toda la cadena .env → config → engine → MySQL funciona.
+    """
+    with engine.connect() as connection:
+        connection.execute(text("SELECT 1"))
+    return {"database": "connected"}
