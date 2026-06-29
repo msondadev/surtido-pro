@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import String, Float, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 from app.models.enums import EstadoPedido
 
@@ -31,5 +31,38 @@ class Pedido(Base):
 
 
 
-        # self.detalles: list[DetallePedido] = [] 
+# relationship
+    
+    # Usuario que creó el pedido
+    usuario: Mapped["Usuario"] = relationship("Usuario", back_populates="pedidos")
+    # back_populates conecta con pedidos definido en usuario.py.
 
+    # Cliente que hizo el pedido
+    cliente: Mapped["Participante"] = relationship(
+        "Participante", 
+        back_populates="pedidos_cliente",
+        foreign_keys=[cliente_id]
+    )
+    # back_populates conecta con pedidos_cliente definido en participante.py.
+
+
+    # Repartidor asignado (Solo si aplica)
+    repartidor: Mapped["Empleado | None"] = relationship(
+        "Empleado", 
+        back_populates="pedidos_repartidor",
+        foreign_keys=[repartidor_id]
+    )
+    # back_populates conecta con pedidos_repartidor definido en empleado (participante.py).
+
+
+    detalles: Mapped[list["DetallePedido"]] = relationship(
+        "DetallePedido", 
+        back_populates="pedido"
+    )
+
+    # Relación 1 a N con Pago.
+    # Un pedido puede tener múltiples pagos registrados.
+    pagos: Mapped[list["Pago"]] = relationship(
+        "Pago", 
+        back_populates="pedido"
+    )

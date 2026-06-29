@@ -1,7 +1,8 @@
 from sqlalchemy import ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 from app.models.relacion_comercial import RelacionComercial
+from app.models.asociaciones import participante_relacion_asoc, producto_proveedor_asoc
 
 class Participante(Base):
     """
@@ -29,10 +30,40 @@ class Participante(Base):
 
     __mapper_args__ = {
         "polymorphic_on": "tipo_participante",  # Le dice a SQLAlchemy qué columna usar para distinguir subclases.
-        "polymorphic_identity": "participante"  # None porque Participante no se instancia directamente.
+        "polymorphic_identity": None,  # None porque Participante no se instancia directamente.
     }
 
-# self.relaciones_Comerciales = list[RelacionComercial] = []  
+
+
+    # relationships
+
+    # Uno a Uno con Usuario (El back_populates conecta con el que armamos recién)
+    usuario: Mapped["Usuario | None"] = relationship(
+        "Usuario",
+        back_populates="participante"
+    )
+
+    # Muchos a Muchos con RelacionComercial (Usa tabla intermedia)
+    relaciones_comerciales: Mapped[list["RelacionComercial"]] = relationship(
+        "RelacionComercial",
+        secondary=participante_relacion_asoc,
+        back_populates="participantes"
+    )
+
+    # Muchos a Muchos con Producto (Un participante puede ser proveedor de varios productos)
+    productos_provistos: Mapped[list["Producto"]] = relationship(
+        "Producto",
+        secondary=producto_proveedor_asoc,
+        back_populates="proveedores"
+    )
+
+    # Uno a Muchos con Pedidos (El participante como CLIENTE que hace el pedido)
+    # Aclaramos foreign_keys porque Pedido tiene 2 FKs hacia acá (cliente_id y repartidor_id)
+    pedidos_cliente: Mapped[list["Pedido"]] = relationship(
+        "Pedido",
+        back_populates="cliente",
+        foreign_keys="Pedido.cliente_id"
+    )
 
 
 # ====================
@@ -54,7 +85,6 @@ class PersonaFisica(Participante):
         "polymorphic_identity": "persona_fisica"
     }
 
-    #self.relaciones_Comerciales = list[RelacionComercial] = []  
 
 
 # ==============
@@ -96,7 +126,12 @@ class Empleado(PersonaFisica):
         "polymorphic_identity": "empleado"
     }
 
-
+    # Solo los empleados pueden ser repartidores, por ende esta relación vive acá y no en el Padre
+    pedidos_repartidor: Mapped[list["Pedido"]] = relationship(
+        "Pedido",
+        back_populates="repartidor",
+        foreign_keys="Pedido.repartidor_id"
+    )
 
 
 

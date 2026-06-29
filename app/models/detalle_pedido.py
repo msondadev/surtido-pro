@@ -1,5 +1,5 @@
 from sqlalchemy import String, Integer, Float, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 
 class DetallePedido(Base):
@@ -20,3 +20,14 @@ class DetallePedido(Base):
     
     # FK hacia productos: el producto vendido en este renglón.
     producto_id: Mapped[int] = mapped_column(ForeignKey("productos.id"), nullable=False)
+
+
+
+    # relationship
+    # Relación N a 1 con Pedido.
+    pedido: Mapped["Pedido"] = relationship("Pedido", back_populates="detalles")
+    # back_populates conecta con detalles definido en pedido.py.
+    
+    # Relación N a 1 con Producto.
+    producto: Mapped["Producto"] = relationship("Producto")
+

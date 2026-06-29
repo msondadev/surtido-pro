@@ -1,7 +1,6 @@
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
-
 
 class Categoria(Base):
 
@@ -13,8 +12,12 @@ class Categoria(Base):
     nombre: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
     
 
-
-# La lista productos: List[Producto]  
-# Queda pendiente cuando haga las relacioens. 
-
-
+# relationship
+    # Relación 1 a N con Producto.
+    # Una categoría puede tener muchos productos.
+    
+    productos: Mapped[list["Producto"]] = relationship(
+        "Producto",
+        back_populates="categoria"
+    )
+    # back_populates conecta con categoria definido en producto.py.

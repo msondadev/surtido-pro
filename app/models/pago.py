@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import String, Float, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 from app.models.enums import EstadoPago
 
@@ -35,6 +35,12 @@ class Pago(Base):
         "polymorphic_identity": None
     }
 
+
+# relationship
+    pedido: Mapped["Pedido"] = relationship(
+        "Pedido", 
+        back_populates="pagos"
+    )
 
 # ====================
 # Hijas

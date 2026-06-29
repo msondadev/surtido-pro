@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import String, Integer, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 from app.models.enums import TipoMovimientoStock
 
@@ -31,7 +31,18 @@ class MovimientoStock(Base):
 
 
 
+# relationship
+    # Relación N a 1 con Producto.
+    producto: Mapped["Producto"] = relationship(
+        "Producto", 
+        back_populates="movimientos_stock"
+    )
+    # back_populates conecta con movimientos_stock definido en producto.py.
+    
 
-
-        # self.producto = producto
-        # self.usuario = usuario
+    # Relación N a 1 con Usuario (quién generó el movimiento).
+    usuario: Mapped["Usuario"] = relationship(
+        "Usuario", 
+        back_populates="movimientos_stock"
+    )
+    # back_populates conecta con movimientos_stock definido en usuario.py.
