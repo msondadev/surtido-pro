@@ -1,17 +1,37 @@
-from datetime import date
+from datetime import datetime
+from enum import Enum as PyEnum
+from sqlalchemy import String, Integer, DateTime, ForeignKey, Enum
+from sqlalchemy.sql import func
+from sqlalchemy.orm import Mapped, mapped_column
+from app.core.database import Base
 from app.models.enums import TipoMovimientoStock
-from app.models.producto import Producto
-from app.models.usuario import Usuario
+
+class MovimientoStock(Base):
+    """
+    Registro histórico de cada cambio en el stock de un producto.
+    Permite auditoría y trazabilidad completa del inventario.
+    """
+
+    __tablename__ = "movimientos_stock"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    fecha: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    cantidad: Mapped[int] = mapped_column(Integer, nullable=False)
+    observacion: Mapped[str | None] = mapped_column(String(255))
+    
+    # Enum
+    tipo: Mapped[TipoMovimientoStock] = mapped_column(PyEnum(TipoMovimientoStock, native_enum=False), )
 
 
-class MovimientoStock:
-    def __init__(self, id: int, fecha: date, tipo: TipoMovimientoStock, cantidad: int, obervacion: str, producto: Producto, usuario: Usuario):
-        self.id = id
-        self.fecha = fecha
-        self.tipo = tipo
-        self.cantidad = cantidad
-        self.observacion = obervacion
-        self.producto = producto
-        self.usuario = usuario
+    # FK hacia productos: qué producto fue afectado por el movimiento.
+    producto_id: Mapped[int] = mapped_column(ForeignKey("productos.id"), nullable=False)
+    
+    # FK hacia usuarios: quién generó el movimiento (trazabilidad)
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), nullable=False)
 
-        
+
+
+
+
+        # self.producto = producto
+        # self.usuario = usuario

@@ -1,38 +1,35 @@
-from datetime import date
-from app.models.detalle_pedido import DetallePedido
-from app.models.empleado import Empleado
+from datetime import datetime
+from enum import Enum as PyEnum
+from sqlalchemy import String, Float, DateTime, ForeignKey, Enum
+from sqlalchemy.sql import func
+from sqlalchemy.orm import Mapped, mapped_column
+from app.core.database import Base
 from app.models.enums import EstadoPedido
-from app.models.participante import Participante
-from app.models.producto import Producto
-from app.models.usuario import Usuario
 
-class Pedido:
-    def __init__(self, id: int, fecha: str, estado: EstadoPedido, total: float, cliente: Participante, usuario: Usuario, repartidor: Empleado = None):
-        self.id = id
-        self.fecha = fecha
-        self.estado = estado
-        self.total = total
-        self.cliente = cliente # Puede ser PersonaFisica o Empresa
-        self.usuario = usuario
-        self.repartidor = repartidor # Opcional: se asigna al organizar la entrega.
-        self.detalles: list[DetallePedido] = [] 
+class Pedido(Base):
+    __tablename__ = "pedidos"
 
-    def agregarProducto(self, producto: Producto, cantidad: int):
-        # Agrega un producto al pedido creando un DetallePedido asociado. 
-        pass
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    fecha: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    total: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     
-    def calcularTotal(self):
-        # Suma los subtotales de todos los detalles y actualiza self.total.
-        pass
+    # Columna de estado usando el Enum
+    estado: Mapped[EstadoPedido] = mapped_column(PyEnum(EstadoPedido, native_enum=False), default=EstadoPedido.PENDIENTE)
+    # SAEnum integra el Enum de Python con MySQL.
+    # MySQL crea una columna ENUM que solo acepta los valores definidos.
 
-    def confirmarPedido(self):
-        # Confirma, descuenta stock reservado y actualiza el estado.
-        pass
 
-    def cancelarPedido(self):
-        # Cancela y libera el stock previamente reservado.
-        pass
+    # FK hacia participantes (cliente): para quién es el pedido.
+    cliente_id: Mapped[int] = mapped_column(ForeignKey("participantes.id"), nullable=False)
+    
+    # FK hacia usuarios (creado_por): quién registró el pedido en el sistema.
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), nullable=False)
+    
+    # FK hacia empleados (repartidor): opcional, se asigna al organizar la entrega.
+    repartidor_id: Mapped[int | None] = mapped_column(ForeignKey("empleados.id"), nullable=True)
+    # Mapped[int | None] representa la cardinalidad 0..1 del UML.
 
-    def cambiarEstado(self):
-        # Actualiza el estadod el pedido según lo elegido. 
-        pass
+
+
+        # self.detalles: list[DetallePedido] = [] 
+

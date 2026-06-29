@@ -29,4 +29,4 @@ def db_test():
     """
     with engine.connect() as connection:
         connection.execute(text("SELECT 1"))
-    return {"database": "connected"}
+    return {"database": "¡Conexión a MySQL exitosa!"}

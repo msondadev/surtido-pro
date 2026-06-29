@@ -28,4 +28,27 @@ El contenido incluido representa:
 
 ---
 
+# Requisitos
+
+- Python 3.13
+- MySQL / XAMPP
+
+## Instalación
+1. Clonar repositorio 
+2. Crear el entorno virtual: 'python -m venv env'
+3. Activarlo: 'env\Scripts\activate'
+4. Instalar dependencias: 'pip install -r requirements.txt'
+5. Copiar '.env.example' a '.env' y completar con tus credenciales. 
+
+## Levantar servidor
+uvicorn app.main:app --reload
+
+## Verificar conexión
+http://127.0.0.1:8000/db-test
+
+## Swagger
+http://127.0.0.1:8000/docs#/
+
+---
+
 
