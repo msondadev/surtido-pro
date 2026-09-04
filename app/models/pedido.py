@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum as PyEnum
 from sqlalchemy import String, Float, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -14,8 +13,7 @@ class Pedido(Base):
     total: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     
     # Columna de estado usando el Enum
-    estado: Mapped[EstadoPedido] = mapped_column(PyEnum(EstadoPedido, native_enum=False), default=EstadoPedido.PENDIENTE)
-    # SAEnum integra el Enum de Python con MySQL.
+    estado: Mapped[EstadoPedido] = mapped_column(default=EstadoPedido.PENDIENTE)
     # MySQL crea una columna ENUM que solo acepta los valores definidos.
 
 

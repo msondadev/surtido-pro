@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum as PyEnum
 from sqlalchemy import String, Integer, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,7 +19,7 @@ class MovimientoStock(Base):
     observacion: Mapped[str | None] = mapped_column(String(255))
     
     # Enum
-    tipo: Mapped[TipoMovimientoStock] = mapped_column(PyEnum(TipoMovimientoStock, native_enum=False), )
+    tipo: Mapped[TipoMovimientoStock] = mapped_column()
 
 
     # FK hacia productos: qué producto fue afectado por el movimiento.

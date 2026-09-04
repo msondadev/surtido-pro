@@ -1,5 +1,5 @@
 from datetime import datetime
-from enum import Enum as PyEnum
+# pyrefly: ignore [missing-import]
 from sqlalchemy import String, Float, DateTime, ForeignKey, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -20,7 +20,7 @@ class Pago(Base):
     monto: Mapped[float] = mapped_column(Float, nullable=False)
 
     #Enum
-    estado: Mapped[EstadoPago] = mapped_column(PyEnum(EstadoPago, native_enum=False), default=EstadoPago.PENDIENTE)
+    estado: Mapped[EstadoPago] = mapped_column(default=EstadoPago.PENDIENTE)
     
     # FK hacia pedidos: el pedido al que corresponde este pago.
     pedido_id: Mapped[int] = mapped_column(ForeignKey("pedidos.id"), nullable=False)

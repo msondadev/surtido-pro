@@ -79,7 +79,7 @@ class PersonaFisica(Participante):
     nombre: Mapped[str] = mapped_column(String(50), nullable=False)
     apellido: Mapped[str] = mapped_column(String(50), nullable=False)
     dni: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
-    fecha_nacimiento: Mapped[str | None]
+    fecha_nacimiento: Mapped[str | None] = mapped_column(String(20))
 
     __mapper_args__ = {
         "polymorphic_identity": "persona_fisica"
@@ -120,7 +120,7 @@ class Empleado(PersonaFisica):
     
     legajo: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
 
-    fecha_ingreso: Mapped[str | None]
+    fecha_ingreso: Mapped[str | None] = mapped_column(String(20))
 
     __mapper_args__ = {
         "polymorphic_identity": "empleado"

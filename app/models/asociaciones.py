@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.core.database import Base
 
@@ -21,8 +22,6 @@ usuario_rol_asoc = Table(
     Column("rol_id", Integer, ForeignKey("roles.id"), primary_key=True)
 )
 
-
-
 # Puente entre Participantes y Relaciones Comerciales
 # Un participante puede ser cliente, proveedor, o ambos.
 # Una relación comercial puede aplicar a muchos participantes.
@@ -33,9 +32,6 @@ participante_relacion_asoc = Table(
     Column("participante_id", Integer, ForeignKey("participantes.id"), primary_key=True),
     Column("relacion_comercial_id", Integer, ForeignKey("relaciones_comerciales.id"), primary_key=True)
 )
-
-
-
 
 # Puente entre Productos y Proveedores (Participantes)
 # Un producto puede tener varios proveedores.
